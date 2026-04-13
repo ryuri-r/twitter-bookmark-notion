@@ -19,6 +19,15 @@ BASE_DIR         = Path(__file__).parent
 CLASSIFIED_FILE  = BASE_DIR / "classified_bookmarks.jsonl"
 CATEGORIES_FILE  = BASE_DIR / "categories.json"
 
+# ── .env 자동 로드 ────────────────────────────────────────────────────
+_env_file = BASE_DIR / ".env"
+if _env_file.exists():
+    for _line in _env_file.read_text(encoding="utf-8").splitlines():
+        _line = _line.strip()
+        if _line and not _line.startswith("#") and "=" in _line:
+            _k, _v = _line.split("=", 1)
+            os.environ.setdefault(_k.strip(), _v.strip())
+
 GEMINI_API_KEY   = os.environ.get("GEMINI_API_KEY", "")
 GEMINI_MODEL     = "gemini-2.5-flash"
 BATCH_SIZE       = 10   # 한 번에 몇 개씩 보낼지
