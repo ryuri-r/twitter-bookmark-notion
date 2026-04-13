@@ -36,7 +36,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 # API 선택: OpenAI 우선, 없으면 Gemini
 if OPENAI_API_KEY:
     AI_PROVIDER  = "openai"
-    OPENAI_MODEL = "gpt-4o-mini"
+    OPENAI_MODEL = "gpt-4.1-mini"
     BATCH_SIZE   = 20   # OpenAI는 빠르고 한도 여유로움
     SLEEP_SEC    = 1
 elif GEMINI_API_KEY:
