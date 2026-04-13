@@ -1,7 +1,7 @@
 """
 bookmark_sync.py
-Twitter GraphQL API로 북마크 직접 동기화 (fieldtheory 불필요)
-저장: ~/.ft-bookmarks/bookmarks.jsonl
+Twitter GraphQL API로 북마크 직접 동기화
+저장: 이 스크립트와 같은 폴더 내 bookmarks.jsonl
 """
 import json, os, sys, time
 from pathlib import Path
@@ -19,13 +19,12 @@ if _env_file.exists():
             os.environ.setdefault(_k.strip(), _v.strip())
 
 # ── 설정 ────────────────────────────────────────────────────────────
-OUTPUT_DIR   = Path(os.environ["USERPROFILE"]) / ".ft-bookmarks"
+OUTPUT_DIR   = Path(__file__).parent          # 스크립트와 같은 폴더
 OUTPUT_FILE  = OUTPUT_DIR / "bookmarks.jsonl"
 
-# 트위터 인증 정보: .env 우선, 없으면 기존 .auth.json 방식 fallback
+# 트위터 인증 정보 (.env에서 로드)
 _CT0        = os.environ.get("TWITTER_CT0", "")
 _AUTH_TOKEN = os.environ.get("TWITTER_AUTH_TOKEN", "")
-AUTH_FILE   = Path(os.environ["USERPROFILE"]) / ".ft-bookmarks" / ".auth.json"
 
 BEARER = "AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA"
 QUERY_ID  = "Z9GWmP0kP2dajyckAaDUBw"
@@ -81,16 +80,11 @@ def _best_media_url(m: dict) -> str:
 
 
 def load_cookies():
-    # .env에 값이 있으면 우선 사용
-    if _CT0 and _AUTH_TOKEN:
-        return {"ct0": _CT0, "auth_token": _AUTH_TOKEN}
-    # fallback: 기존 .auth.json 방식
-    if not AUTH_FILE.exists():
+    if not _CT0 or not _AUTH_TOKEN:
         print("오류: 트위터 토큰이 설정되지 않았습니다.")
         print("setup.bat을 실행해서 토큰을 먼저 입력해주세요.")
         sys.exit(1)
-    with open(AUTH_FILE) as f:
-        return json.load(f)
+    return {"ct0": _CT0, "auth_token": _AUTH_TOKEN}
 
 def fetch_bookmarks_page(ct0, auth_token, cursor=None):
     variables = {"count": 20, "includePromotedContent": False}

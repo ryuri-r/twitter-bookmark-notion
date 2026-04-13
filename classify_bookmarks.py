@@ -16,7 +16,7 @@ from pathlib import Path
 
 # ── 경로 설정 ─────────────────────────────────────────────────────────
 BASE_DIR          = Path(__file__).parent
-BOOKMARKS_FILE    = Path(os.environ["USERPROFILE"]) / ".ft-bookmarks" / "bookmarks.jsonl"
+BOOKMARKS_FILE    = BASE_DIR / "bookmarks.jsonl"       # bookmark_sync.py가 같은 폴더에 생성
 CATEGORIES_FILE   = BASE_DIR / "categories.json"
 OUTPUT_FILE       = BASE_DIR / "classified_bookmarks.jsonl"
 
