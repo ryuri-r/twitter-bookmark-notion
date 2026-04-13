@@ -30,7 +30,7 @@ def main():
         print("  2. 분류          (카테고리별 자동 분류)")
         print("  3. Notion 업로드 (Notion DB에 저장)")
         print("  4. 전체 실행     (1 → 2 → 3 한 번에)")
-        print("  5. AI 재분류     (기타 항목 Gemini로 재분류)")
+        print("  5. AI 재분류     (기타 항목 OpenAI/Gemini로 재분류)")
         print("  6. 전체 재분류   (분류 결과 초기화 후 처음부터 다시)")
         print("  0. 종료")
         print()
