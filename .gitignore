@@ -7,6 +7,7 @@ bookmarks.jsonl
 classified_bookmarks.jsonl
 uploaded_ids.json
 notion_db_id.txt
+.reclassify_progress.json
 
 # Python 캐시
 __pycache__/

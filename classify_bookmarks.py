@@ -48,14 +48,18 @@ def classify(text: str, categories: list) -> tuple[str, str]:
     """
     text_lower = text.lower()
 
+    etc_cat = None
     for cat in categories:
+        if cat["id"] == "etc":
+            etc_cat = cat
+            continue
         for kw in cat.get("keywords", []):
             if kw.lower() in text_lower:
                 return cat["id"], cat["label"]
 
-    # fallback
-    last = categories[-1]
-    return last["id"], last["label"]
+    # fallback: etc 카테고리 (없으면 마지막 항목)
+    fallback = etc_cat or categories[-1]
+    return fallback["id"], fallback["label"]
 
 def extract_tags(text: str, categories: list, max_tags: int = 5) -> list:
     """매칭된 키워드 중 상위 max_tags개를 태그로 추출"""
