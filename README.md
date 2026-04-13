@@ -186,8 +186,10 @@ Python이 이미 설치되어 있다면 이 단계는 건너뛰세요.
 
 ## 📂 파일 구성
 
+모든 파일은 **같은 폴더 안에** 있어야 합니다. 압축을 풀면 아래 구조가 됩니다.
+
 ```
-twitter-bookmark-pipeline/
+twitter-bookmark-notion/
 ├── setup.bat                  ← 최초 설정 (1회만 실행)
 ├── run.bat                    ← 매번 실행할 파일
 ├── bookmark_sync.py           트위터 북마크 수집
@@ -195,7 +197,14 @@ twitter-bookmark-pipeline/
 ├── reclassify_with_gemini.py  Gemini AI 재분류 (선택)
 ├── setup_and_upload.py        Notion DB 생성 & 업로드
 ├── categories.json            카테고리 & 키워드 설정
-└── .env.example               설정 파일 예시
+├── .env.example               설정 파일 예시
+│
+│   ← 아래는 실행 후 자동으로 생성됩니다 (건드리지 마세요)
+├── .env                       입력한 토큰 저장
+├── bookmarks.jsonl            수집된 북마크
+├── classified_bookmarks.jsonl 분류 완료된 북마크
+├── uploaded_ids.json          Notion 업로드 기록 (지우면 중복 발생)
+└── notion_db_id.txt           생성된 Notion DB ID
 ```
 
 ---
