@@ -148,6 +148,12 @@ def main():
     ]
     ENV_FILE.write_text("\n".join(lines), encoding="utf-8")
 
+    # 페이지 ID가 바뀌었으면 기존 DB 기록 삭제 (새 DB 생성하도록)
+    db_id_file = BASE_DIR / "notion_db_id.txt"
+    if db_id_file.exists():
+        db_id_file.unlink()
+        print("  기존 Notion DB 기록을 초기화했습니다. 새 DB가 생성됩니다.")
+
     print("━" * 52)
     print("[완료] 설정 파일(.env)이 생성되었습니다!")
     print("━" * 52)
