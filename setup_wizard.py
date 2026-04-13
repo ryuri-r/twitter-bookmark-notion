@@ -110,21 +110,37 @@ def main():
     ])
     print()
 
-    # ── 4단계: Gemini (선택) ────────────────────────────────────────
+    # ── 4단계: AI 재분류 키 (선택) ─────────────────────────────────
     print("━" * 52)
-    print("[4단계] Gemini API 키 (선택 — 없어도 됩니다)")
+    print("[4단계] AI 재분류 키 (선택 — 없어도 됩니다)")
     print("━" * 52)
     print()
-    print("'기타'로 분류된 트윗을 AI가 재분류할 때만 필요합니다.")
-    print("https://aistudio.google.com/app/apikey 에서 무료 발급 가능.")
-    print("없으면 그냥 Enter를 누르세요.")
+    print("'기타'로 분류된 트윗을 AI가 다시 분류할 때 사용합니다.")
+    print("OpenAI 또는 Gemini 중 하나만 있으면 됩니다.")
+    print("(둘 다 없으면 AI 재분류 기능만 비활성화, 나머지는 정상 동작)")
     print()
-    gemini_key = ask("  Gemini API 키 (없으면 Enter): ")
-    if gemini_key:
-        gemini_key = validate(gemini_key, "Gemini API 키", [
-            (lambda v: v.startswith("AIza"),
-             "Gemini API 키는 'AIza'로 시작해야 합니다. 키를 다시 확인하세요."),
+    print("  [OpenAI] 유료, 빠르고 안정적 — 모델: gpt-4o-mini")
+    print("    발급: https://platform.openai.com/api-keys")
+    print()
+    print("  [Gemini] 무료 가능 — 모델: gemini-2.0-flash")
+    print("    발급: https://aistudio.google.com/app/apikey")
+    print()
+
+    openai_key = ask("  OpenAI API 키 (없으면 Enter): ")
+    if openai_key:
+        openai_key = validate(openai_key, "OpenAI API 키", [
+            (lambda v: v.startswith("sk-"),
+             "OpenAI API 키는 'sk-'로 시작해야 합니다. 키를 다시 확인하세요."),
         ])
+
+    gemini_key = ""
+    if not openai_key:
+        gemini_key = ask("  Gemini API 키 (없으면 Enter): ")
+        if gemini_key:
+            gemini_key = validate(gemini_key, "Gemini API 키", [
+                (lambda v: v.startswith("AIza"),
+                 "Gemini API 키는 'AIza'로 시작해야 합니다. 키를 다시 확인하세요."),
+            ])
     print()
 
     # ── .env 저장 ───────────────────────────────────────────────────
@@ -133,6 +149,7 @@ def main():
         f"TWITTER_AUTH_TOKEN={auth_token}",
         f"NOTION_TOKEN={notion_token}",
         f"NOTION_PARENT_PAGE_ID={page_id}",
+        f"OPENAI_API_KEY={openai_key}",
         f"GEMINI_API_KEY={gemini_key}",
     ]
     ENV_FILE.write_text("\n".join(lines), encoding="utf-8")
