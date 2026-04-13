@@ -211,14 +211,14 @@ def main():
     print(f"분류 대상: {len(to_process)}개\n")
 
     if not to_process:
-        print("새로 분류할 북마크 없음.")
-        if RESET_CLASSIFIED:
-            print("(--reset 옵션: OUTPUT 파일 초기화 후 전체 재분류)")
-            to_process = bookmarks
-            already_done.clear()
-        else:
+        if not RESET_CLASSIFIED:
+            print("새로 분류할 북마크 없음.")
             print("재분류 하려면: python classify_bookmarks.py --reset")
             return
+        # --reset: 전체 재분류
+        print("(--reset 옵션: 전체 재분류 시작)")
+        to_process = bookmarks
+        already_done.clear()
 
     # 분류 실행
     stat = {}

@@ -33,21 +33,23 @@ if _env_file.exists():
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 
+# 모델 기본값 (변수 스코프 오류 방지)
+OPENAI_MODEL = "gpt-4.1-mini"
+GEMINI_MODEL = "gemini-2.5-flash"
+
 # API 선택: OpenAI 우선, 없으면 Gemini
 if OPENAI_API_KEY:
-    AI_PROVIDER  = "openai"
-    OPENAI_MODEL = "gpt-4.1-mini"
-    BATCH_SIZE   = 20   # OpenAI는 빠르고 한도 여유로움
-    SLEEP_SEC    = 1
+    AI_PROVIDER = "openai"
+    BATCH_SIZE  = 20
+    SLEEP_SEC   = 1
 elif GEMINI_API_KEY:
-    AI_PROVIDER  = "gemini"
-    GEMINI_MODEL = "gemini-2.5-flash"
-    BATCH_SIZE   = 10   # 무료 15 RPM 기준
-    SLEEP_SEC    = 4
+    AI_PROVIDER = "gemini"
+    BATCH_SIZE  = 10
+    SLEEP_SEC   = 4
 else:
-    AI_PROVIDER  = None
-    BATCH_SIZE   = 10
-    SLEEP_SEC    = 1
+    AI_PROVIDER = None
+    BATCH_SIZE  = 10
+    SLEEP_SEC   = 1
 
 DRY_RUN = "--dry-run" in sys.argv
 
@@ -173,11 +175,9 @@ def main():
     if not AI_PROVIDER:
         print("\n⚠️  AI API 키가 없습니다.")
         print("  아래 중 하나를 .env 파일에 추가하세요:\n")
-        print("  [OpenAI - 유료, 빠르고 안정적]")
-        print("    OPENAI_API_KEY=sk-...")
+        print("  OPENAI_API_KEY=sk-...")
         print("    발급: https://platform.openai.com/api-keys\n")
-        print("  [Gemini - 무료 가능]")
-        print("    GEMINI_API_KEY=AIza...")
+        print("  GEMINI_API_KEY=AIza...")
         print("    발급: https://aistudio.google.com\n")
         print("  setup.bat을 다시 실행해서 키를 입력하거나,")
         print("  .env 파일을 직접 수정하세요.")

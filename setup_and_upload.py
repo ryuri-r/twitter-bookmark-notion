@@ -97,6 +97,9 @@ def create_db():
     DB_ID_FILE.write_text(db_id)
     print(f"DB 생성 완료: {db_id}")
     print(f"DB URL: https://www.notion.so/{db_id}")
+    print()
+    print("⚠️  업로드 전 확인: Notion에서 부모 페이지에 Integration이 연결되어 있어야 합니다.")
+    print("   페이지 우상단 '...' → '연결' → Integration 이름 선택")
     return db_id
 
 # ── 2단계: 업로드 ─────────────────────────────────────────────────────

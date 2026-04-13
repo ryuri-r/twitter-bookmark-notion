@@ -152,7 +152,15 @@ def main():
     db_id_file = BASE_DIR / "notion_db_id.txt"
     if db_id_file.exists():
         db_id_file.unlink()
-        print("  기존 Notion DB 기록을 초기화했습니다. 새 DB가 생성됩니다.")
+        print("  기존 Notion DB 기록 초기화 → 새 DB가 생성됩니다.")
+
+    # 업로드 기록도 초기화할지 확인
+    uploaded_file = BASE_DIR / "uploaded_ids.json"
+    if uploaded_file.exists():
+        ans = ask("  기존 업로드 기록도 초기화할까요? (새 DB에 전부 다시 올리려면 y): ")
+        if ans.lower() == "y":
+            uploaded_file.unlink()
+            print("  업로드 기록 초기화 완료.")
 
     print("━" * 52)
     print("[완료] 설정 파일(.env)이 생성되었습니다!")
