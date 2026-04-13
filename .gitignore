@@ -1,0 +1,22 @@
+# 절대 올리면 안 되는 것들
+.env
+*.auth.json
+
+# 개인 데이터 파일
+bookmarks.jsonl
+classified_bookmarks.jsonl
+uploaded_ids.json
+notion_db_id.txt
+
+# Python 캐시
+__pycache__/
+*.pyc
+*.pyo
+
+# 에디터
+.vscode/
+.idea/
+*.DS_Store
+
+# Windows
+Thumbs.db
