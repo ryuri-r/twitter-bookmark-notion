@@ -44,13 +44,20 @@ HEADERS = {
 def api(method, path, body=None):
     url = f"https://api.notion.com/v1/{path}"
     data = json.dumps(body).encode("utf-8") if body else None
-    req = ureq.Request(url, data=data, headers=HEADERS, method=method)
-    try:
-        with ureq.urlopen(req, timeout=20) as resp:
-            return json.loads(resp.read())
-    except urllib.error.HTTPError as e:
-        err = e.read().decode("utf-8", errors="ignore")
-        raise RuntimeError(f"HTTP {e.code}: {err[:300]}")
+    retry_waits = [5, 15, 30]
+    for attempt in range(4):
+        req = ureq.Request(url, data=data, headers=HEADERS, method=method)
+        try:
+            with ureq.urlopen(req, timeout=20) as resp:
+                return json.loads(resp.read())
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < 3:
+                wait = retry_waits[attempt]
+                print(f"\n  ⏳ Notion rate limit → {wait}초 후 재시도...")
+                time.sleep(wait)
+                continue
+            err = e.read().decode("utf-8", errors="ignore")
+            raise RuntimeError(f"HTTP {e.code}: {err[:300]}")
 
 # ── 1단계: DB 생성 ────────────────────────────────────────────────────
 def create_db():
