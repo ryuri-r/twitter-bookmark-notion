@@ -31,6 +31,7 @@ def main():
         print("  3. Notion 업로드 (Notion DB에 저장)")
         print("  4. 전체 실행     (1 → 2 → 3 한 번에)")
         print("  5. AI 재분류     (기타 항목 Gemini로 재분류)")
+        print("  6. 전체 재분류   (분류 결과 초기화 후 처음부터 다시)")
         print("  0. 종료")
         print()
 
@@ -62,6 +63,13 @@ def main():
             print("전체 실행 완료!")
         elif choice == "5":
             run("reclassify_with_gemini.py")
+        elif choice == "6":
+            print("분류 결과를 초기화하고 처음부터 다시 분류합니다.")
+            confirm = input("계속할까요? (y/n): ").strip().lower()
+            if confirm == "y":
+                run_with_arg("classify_bookmarks.py", "--reset")
+            else:
+                print("취소했습니다.")
         elif choice == "0":
             print("종료합니다.")
             break
