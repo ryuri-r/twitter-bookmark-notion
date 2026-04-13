@@ -41,7 +41,7 @@ if OPENAI_API_KEY:
     SLEEP_SEC    = 1
 elif GEMINI_API_KEY:
     AI_PROVIDER  = "gemini"
-    GEMINI_MODEL = "gemini-2.0-flash-lite"
+    GEMINI_MODEL = "gemini-2.5-flash"
     BATCH_SIZE   = 10   # 무료 15 RPM 기준
     SLEEP_SEC    = 4
 else:
