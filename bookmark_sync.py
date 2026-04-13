@@ -226,6 +226,17 @@ def sync():
             data   = fetch_bookmarks_page(ct0, auth_token, cursor)
             tweets, cursor = extract_entries(data)
         except Exception as e:
+            err_str = str(e)
+            if "401" in err_str:
+                print(f"오류: {e}")
+                print()
+                print("  ⚠️  트위터 토큰이 만료되었거나 잘못되었습니다.")
+                print("  setup.bat을 다시 실행해서 토큰을 새로 입력해주세요.")
+                print()
+                print("  토큰 다시 받는 방법:")
+                print("  크롬/엣지 → x.com 로그인 → F12 → Application → Cookies → https://x.com")
+                print("  ct0 와 auth_token 값을 다시 복사해서 입력하세요.")
+                break
             print(f"오류: {e}")
             break
 

@@ -15,6 +15,21 @@ def ask(prompt):
     except EOFError:
         return ""
 
+def validate(value, label, checks):
+    """
+    checks: list of (조건함수, 경고메시지)
+    경고만 띄우고 재입력 기회 줌. 그래도 계속 틀리면 그냥 진행.
+    """
+    for check_fn, warn_msg in checks:
+        if not check_fn(value):
+            print(f"  [경고] {warn_msg}")
+            print(f"  입력값: {value[:30]}{'...' if len(value) > 30 else ''}")
+            retry = ask(f"  다시 입력하려면 새 값을, 그대로 쓰려면 Enter: ")
+            if retry:
+                value = retry
+            break
+    return value
+
 def main():
     print("=" * 52)
     print("  트위터 북마크 파이프라인  최초 설정")
@@ -48,7 +63,16 @@ def main():
     print("  ct0 와 auth_token 값을 복사해서 붙여넣으세요.")
     print()
     ct0        = ask("  ct0 값: ")
+    ct0        = validate(ct0, "ct0", [
+        (lambda v: len(v) >= 20,         "ct0가 너무 짧습니다. 제대로 복사됐는지 확인하세요."),
+        (lambda v: " " not in v,         "공백이 포함되어 있습니다. 값만 복사했는지 확인하세요."),
+    ])
+
     auth_token = ask("  auth_token 값: ")
+    auth_token = validate(auth_token, "auth_token", [
+        (lambda v: len(v) >= 20,         "auth_token이 너무 짧습니다. 제대로 복사됐는지 확인하세요."),
+        (lambda v: " " not in v,         "공백이 포함되어 있습니다. 값만 복사했는지 확인하세요."),
+    ])
     print()
 
     # ── 2단계: Notion 토큰 ──────────────────────────────────────────
@@ -61,6 +85,10 @@ def main():
     print("  '내부 통합 시크릿' 복사 후 붙여넣으세요.")
     print()
     notion_token = ask("  Notion 토큰: ")
+    notion_token = validate(notion_token, "Notion 토큰", [
+        (lambda v: v.startswith("ntn_") or v.startswith("secret_"),
+         "Notion 토큰은 'ntn_' 또는 'secret_'으로 시작해야 합니다. 토큰을 다시 확인하세요."),
+    ])
     print()
 
     # ── 3단계: Notion 페이지 ID ─────────────────────────────────────
@@ -74,6 +102,12 @@ def main():
     print("그 페이지에서 '...' → '연결' → 방금 만든 통합 연결도 잊지 마세요!")
     print()
     page_id = ask("  페이지 ID: ")
+    # 하이픈 제거 후 32자리 확인
+    page_id_clean = page_id.replace("-", "")
+    page_id = validate(page_id, "페이지 ID", [
+        (lambda v: len(v.replace("-", "")) == 32,
+         f"페이지 ID는 32자리여야 합니다 (현재 {len(page_id_clean)}자리). URL 맨 끝 값을 다시 확인하세요."),
+    ])
     print()
 
     # ── 4단계: Gemini (선택) ────────────────────────────────────────
@@ -86,6 +120,11 @@ def main():
     print("없으면 그냥 Enter를 누르세요.")
     print()
     gemini_key = ask("  Gemini API 키 (없으면 Enter): ")
+    if gemini_key:
+        gemini_key = validate(gemini_key, "Gemini API 키", [
+            (lambda v: v.startswith("AIza"),
+             "Gemini API 키는 'AIza'로 시작해야 합니다. 키를 다시 확인하세요."),
+        ])
     print()
 
     # ── .env 저장 ───────────────────────────────────────────────────
