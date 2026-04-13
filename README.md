@@ -18,10 +18,10 @@
 
 | 항목 | 필요 여부 | 비고 |
 |------|-----------|------|
-| Windows PC | 필수 | Mac/Linux는 별도 안내 예정 |
+| Windows PC | 필수 |  |
 | Python 3.8 이상 | 필수 | 아래 설치 방법 참고 |
 | 트위터(X) 계정 | 필수 | 로그인 상태여야 함 |
-| Notion 계정 | 필수 | 무료 계정 가능 |
+| Notion 계정 | 필수 |  |
 | OpenAI 또는 Gemini API 키 | 선택 | AI 재분류 기능 사용 시에만 필요 |
 
 ---
@@ -38,15 +38,12 @@ Python이 이미 설치되어 있다면 이 단계는 건너뛰세요.
 
 > ⚠️ **중요:** 설치 화면 맨 아래 **"Add Python to PATH"** 체크박스를 반드시 체크하세요!
 
-![Python 설치 화면 - PATH 체크박스](docs/img/python_install.png)
 
 ---
 
 ### Step 2. 파일 다운로드
 
 이 페이지 오른쪽 상단 **Code → Download ZIP** 클릭 후 압축 해제
-
-또는 [여기서 최신 버전 다운로드](../../releases/latest)
 
 ---
 
@@ -65,17 +62,9 @@ Python이 이미 설치되어 있다면 이 단계는 건너뛰세요.
 1. 크롬 또는 엣지 브라우저에서 **x.com** 로그인
 2. **F12** 키를 눌러 개발자 도구 열기
 3. 상단 탭에서 **Application** 클릭
-
-   ![개발자 도구 Application 탭](docs/img/devtools_application.png)
-
 4. 왼쪽 메뉴 **Cookies** → **https://x.com** 클릭
-
-   ![Cookies 메뉴](docs/img/devtools_cookies.png)
-
 5. 목록에서 **`ct0`** 를 찾아 Value 열의 값을 복사
 6. 목록에서 **`auth_token`** 을 찾아 Value 열의 값을 복사
-
-   ![ct0, auth_token 위치](docs/img/devtools_tokens.png)
 
 > 💡 토큰이 만료되면 (로그아웃하거나 비밀번호 변경 시) `setup.bat`을 다시 실행해서 갱신하면 됩니다.
 
@@ -86,12 +75,9 @@ Python이 이미 설치되어 있다면 이 단계는 건너뛰세요.
 1. https://www.notion.so/my-integrations 접속 (Notion 로그인 필요)
 2. **"+ 새 API 통합 만들기"** 클릭
 
-   ![Notion 통합 만들기](docs/img/notion_integration_new.png)
-
 3. 이름 아무거나 입력 (예: `트위터북마크`) → **제출**
 4. **"내부 통합 시크릿"** 옆 **표시** 클릭 → 값 복사
 
-   ![Notion 시크릿 복사](docs/img/notion_secret.png)
 
 ---
 
@@ -102,8 +88,6 @@ Python이 이미 설치되어 있다면 이 단계는 건너뛰세요.
 1. 해당 페이지를 Notion에서 열기
 2. 오른쪽 상단 **`...`** 메뉴 클릭
 3. **연결** → 방금 만든 통합 이름 클릭해서 연결
-
-   ![Notion 페이지 연결](docs/img/notion_connect.png)
 
 4. 브라우저 주소창에서 URL 확인
    ```
@@ -136,7 +120,7 @@ Python이 이미 설치되어 있다면 이 단계는 건너뛰세요.
 
 ---
 
-## 📁 카테고리 종류
+## 📁 카테고리 종류 - 기본설정, 추가로 단어를 넣으면 그 카테고리에 인식되게 됩니다.
 
 | 카테고리 | 설명 |
 |----------|------|
@@ -161,6 +145,7 @@ Python이 이미 설치되어 있다면 이 단계는 건너뛰세요.
 
 "기타"로 분류된 트윗이 많다면 AI가 한 번 더 분류해줄 수 있습니다.  
 **OpenAI 또는 Gemini 키 중 하나만 있으면 됩니다.** 없어도 나머지 기능은 정상 동작합니다.
+(Gemini 무료키는 시간이 오래걸리네요)
 
 - OpenAI 키 발급: https://platform.openai.com/api-keys
 - Gemini 키 발급: https://aistudio.google.com/app/apikey
@@ -178,7 +163,7 @@ GEMINI_API_KEY=AIza...
 ## ❓ 자주 묻는 질문
 
 **Q. "python은(는) 내부 또는 외부 명령..."이라는 오류가 떠요**  
-→ Python 설치 시 "Add Python to PATH"를 체크하지 않았습니다. Python을 제거 후 재설치하거나, [이 방법](https://phoenixnap.com/kb/add-python-to-path)을 참고해 수동으로 PATH를 추가하세요.
+→ Python 설치 시 "Add Python to PATH"를 체크하지 않았습니다. Python을 제거 후 재설치하거나, 수동으로 PATH를 추가하세요.
 
 **Q. 토큰 오류가 나요 / 북마크가 안 가져와져요**  
 → 트위터에서 로그아웃 후 재로그인하면 토큰이 바뀝니다. `setup.bat`을 다시 실행해 새 토큰을 입력하세요.
