@@ -62,7 +62,7 @@ def main():
             print()
             print("전체 실행 완료!")
         elif choice == "5":
-            run("reclassify_with_gemini.py")
+            run("reclassify_ai.py")
         elif choice == "6":
             print("분류 결과를 초기화하고 처음부터 다시 분류합니다.")
             confirm = input("계속할까요? (y/n): ").strip().lower()

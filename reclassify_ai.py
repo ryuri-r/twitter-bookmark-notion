@@ -1,14 +1,14 @@
 """
-reclassify_with_gemini.py
+reclassify_ai.py
 classified_bookmarks.jsonl에서 "기타" 항목만 AI로 재분류
 
 지원 API (둘 중 하나만 있으면 됨, 둘 다 있으면 OpenAI 우선):
-    - OpenAI:  .env에 OPENAI_API_KEY=sk-...       모델: gpt-4o-mini
-    - Gemini:  .env에 GEMINI_API_KEY=AIza...       모델: gemini-2.0-flash
+    - OpenAI:  .env에 OPENAI_API_KEY=sk-...       모델: gpt-4.1-mini
+    - Gemini:  .env에 GEMINI_API_KEY=AIza...       모델: gemini-2.5-flash
 
 사용법:
-    python reclassify_with_gemini.py
-    python reclassify_with_gemini.py --dry-run   (실제 저장 없이 결과만 확인)
+    python reclassify_ai.py
+    python reclassify_ai.py --dry-run   (실제 저장 없이 결과만 확인)
 """
 
 import json, os, sys, time
@@ -133,7 +133,11 @@ def call_gemini(prompt: str) -> list:
         url,
         {
             "contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {"temperature": 0.1, "maxOutputTokens": 512},
+            "generationConfig": {
+                "temperature": 0.1,
+                "maxOutputTokens": 512,
+                "thinkingConfig": {"thinkingBudget": 0},  # thinking 비활성화 (빈 응답 방지)
+            },
         },
         {"Content-Type": "application/json"}
     )

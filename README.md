@@ -206,7 +206,7 @@ twitter-bookmark-notion/
 ├── run_menu.py                실행 메뉴 (run.bat이 호출)
 ├── bookmark_sync.py           트위터 북마크 수집
 ├── classify_bookmarks.py      카테고리 자동 분류
-├── reclassify_with_gemini.py  AI 재분류 (OpenAI/Gemini 선택)
+├── reclassify_ai.py           AI 재분류 (OpenAI/Gemini 선택)
 ├── setup_and_upload.py        Notion DB 생성 & 업로드
 ├── categories.json            카테고리 & 키워드 설정
 │
