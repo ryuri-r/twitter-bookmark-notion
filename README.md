@@ -160,20 +160,12 @@ Python이 이미 설치되어 있다면 이 단계는 건너뛰세요.
 ## 🤖 AI 재분류 (선택 기능)
 
 "기타"로 분류된 트윗이 많다면 AI가 한 번 더 분류해줄 수 있습니다.  
-**OpenAI 또는 Gemini 중 하나만 있으면 됩니다.** 둘 다 없어도 나머지 기능은 정상 동작합니다.
+**OpenAI 또는 Gemini 키 중 하나만 있으면 됩니다.** 없어도 나머지 기능은 정상 동작합니다.
 
-| | OpenAI | Gemini |
-|---|---|---|
-| 모델 | gpt-4o-mini | gemini-2.0-flash |
-| 비용 | 소량 유료 (매우 저렴) | 무료 플랜 가능 |
-| 안정성 | ⭐⭐⭐ | ⭐⭐ |
-| 발급 주소 | https://platform.openai.com/api-keys | https://aistudio.google.com/app/apikey |
+- OpenAI 키 발급: https://platform.openai.com/api-keys
+- Gemini 키 발급: https://aistudio.google.com/app/apikey
 
-둘 다 입력되어 있으면 OpenAI를 우선 사용합니다.
-
-#### 키 등록 방법
-
-`setup.bat`을 다시 실행하면 AI 키 입력 항목이 나옵니다.  
+`setup.bat`을 다시 실행하면 키 입력 항목이 나옵니다.  
 또는 같은 폴더의 `.env` 파일을 메모장으로 열어 직접 추가해도 됩니다:
 
 ```
