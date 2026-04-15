@@ -217,4 +217,5 @@ twitter-bookmark-notion/
 
 ## 📜 라이선스
 
-MIT License — 개인/비상업적 용도로 자유롭게 사용 가능합니다.
+MIT License — 개인/비상업적 용도로 자유롭게 사용 가능합니다.  
+made by [@ryuri-r](https://github.com/ryuri-r)
